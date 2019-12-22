@@ -1,16 +1,21 @@
 package com.tunayagci.screenshot.statusservice.configuration;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.common.serialization.Deserializer;
+import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.config.KafkaListenerContainerFactory;
+import org.springframework.kafka.core.ConsumerFactory;
+import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.converter.StringJsonMessageConverter;
 
 import java.util.HashMap;
 import java.util.Map;
 
-// NOT USED
+@Configuration
 public class KafkaConfiguration {
 
     @Value("${spring.kafka.bootstrap-servers}")
@@ -20,10 +25,14 @@ public class KafkaConfiguration {
     public KafkaListenerContainerFactory<?> kafkaJsonListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, String> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(consumerFactory());
         factory.setMessageConverter(new StringJsonMessageConverter());
         return factory;
     }
 
+    private ConsumerFactory<? super String, ? super String> consumerFactory() {
+        return new DefaultKafkaConsumerFactory<>(consumerProps(), new StringDeserializer(), new StringDeserializer());
+    }
 
     @Bean
     public Map<String, Object> consumerProps() {
@@ -34,5 +43,10 @@ public class KafkaConfiguration {
         props.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, "15000");
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         return props;
+    }
+
+    @Bean
+    public Deserializer deserializer() {
+        return new StringDeserializer();
     }
 }

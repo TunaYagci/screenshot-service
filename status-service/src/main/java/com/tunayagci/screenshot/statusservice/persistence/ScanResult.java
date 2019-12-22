@@ -3,6 +3,7 @@ package com.tunayagci.screenshot.statusservice.persistence;
 import com.tunayagci.screenshot.statusservice.generic.ScanStatus;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class ScanResult extends UniqueEntity {
@@ -11,7 +12,14 @@ public class ScanResult extends UniqueEntity {
     private ScanStatus scanStatus;
     private String message;
 
+    @ManyToOne
+    private Scan scan;
+
     public ScanResult() {
+    }
+
+    public Scan getScan() {
+        return scan;
     }
 
     public Long getUrl() {
