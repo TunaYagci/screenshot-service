@@ -5,4 +5,10 @@ public class Topics {
     public static final String SCREENSHOT_REQUEST = "screenshot_request";
 
     public static final String IMAGE_UPLOAD_REQUEST = "image_upload_request";
+
+    public static final String SCREENSHOT_STATUS = "screenshot_status";
+
+    public static final String UPLOAD_IMAGE_STATUS = "upload_image_status";
+
+
 }
