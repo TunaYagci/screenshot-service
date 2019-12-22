@@ -11,5 +11,4 @@ public class ScreenshotConsumerApplication {
     public static void main(String[] args) {
         SpringApplication.run(ScreenshotConsumerApplication.class, args);
     }
-
 }
