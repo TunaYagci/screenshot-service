@@ -2,9 +2,11 @@ package com.tunayagci.screenshot.imageservice.store.impl;
 
 import com.tunayagci.screenshot.imageservice.generic.ImageReference;
 import com.tunayagci.screenshot.imageservice.store.ImageStore;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ImageStoreImpl implements ImageStore {
 
     @Override
