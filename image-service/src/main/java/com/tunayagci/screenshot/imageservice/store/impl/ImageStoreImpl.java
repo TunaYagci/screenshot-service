@@ -1,22 +1,25 @@
 package com.tunayagci.screenshot.imageservice.store.impl;
 
+import com.tunayagci.screenshot.imageservice.generic.ImageReference;
 import com.tunayagci.screenshot.imageservice.store.ImageStore;
+
+import java.util.List;
 
 public class ImageStoreImpl implements ImageStore {
 
     @Override
-    public void add() {
-
+    public ImageReference add(String base64Image) {
+        return null;
     }
 
     @Override
-    public void get() {
-
+    public List<ImageReference> get(Long scanId) {
+        return null;
     }
 
     @Override
-    public void exists() {
-
+    public boolean exists() {
+        return true;
     }
 
     @Override

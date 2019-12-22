@@ -1,12 +1,16 @@
 package com.tunayagci.screenshot.imageservice.store;
 
+import com.tunayagci.screenshot.imageservice.generic.ImageReference;
+
+import java.util.List;
+
 public interface ImageStore {
 
-    void add();
+    ImageReference add(String base64Image);
 
-    void get();
+    List<ImageReference> get(Long scanId);
 
-    void exists();
+    boolean exists();
 
     void delete();
 }
