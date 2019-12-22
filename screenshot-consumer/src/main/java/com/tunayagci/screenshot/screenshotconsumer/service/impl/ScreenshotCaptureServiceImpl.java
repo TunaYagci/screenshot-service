@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 import ru.yandex.qatools.ashot.AShot;
 import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
@@ -25,17 +23,16 @@ import java.util.Base64;
 public class ScreenshotCaptureServiceImpl implements ScreenshotCaptureService {
     private static final Logger logger = LoggerFactory.getLogger(ScreenshotCaptureServiceImpl.class);
 
-    private static WebDriver webDriver;
-
-    @PostConstruct
-    public void onPostConstruct() {
-        webDriver = new ChromeDriver();
-    }
-
     public String getScreenshot() throws Exception {
-        BufferedImage image = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(5000))
-                .takeScreenshot(webDriver)
-                .getImage();
+        WebDriver webDriver = new ChromeDriver();
+        BufferedImage image;
+        try {
+            image = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(5000))
+                    .takeScreenshot(webDriver)
+                    .getImage();
+        } finally {
+            webDriver.quit();
+        }
 
         ByteArrayOutputStream compressed = new ByteArrayOutputStream();
         // The important part: Create in-memory stream
@@ -62,11 +59,5 @@ public class ScreenshotCaptureServiceImpl implements ScreenshotCaptureService {
         byte[] jpegData = compressed.toByteArray();
         return Base64.getEncoder().encodeToString(jpegData);
     }
-
-    @PreDestroy
-    public void preDestroy() {
-        webDriver.quit();
-    }
-
 
 }

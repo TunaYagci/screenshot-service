@@ -21,8 +21,8 @@ public class UploadResultProducer {
         this.failProducer = failProducer;
     }
 
-    public SendResult<String, UploadCompletedEvent> successfullyUploaded(String key, String scanId, String image, String url) throws ExecutionException, InterruptedException {
-        return successProducer.send(Topics.UPLOAD_IMAGE_STATUS, key, new UploadCompletedEvent(scanId, new Date(), image, url))
+    public SendResult<String, UploadCompletedEvent> successfullyUploaded(String key, String scanId, String url) throws ExecutionException, InterruptedException {
+        return successProducer.send(Topics.UPLOAD_IMAGE_STATUS, key, new UploadCompletedEvent(scanId, new Date(), url))
                 .get();
     }
 
