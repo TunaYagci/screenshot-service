@@ -19,7 +19,7 @@ public class ImageAPI {
 
     @PostMapping
     public ImageReference upload(@RequestBody AddImageDTO addImageDTO) {
-        return imageService.add(addImageDTO.getScanId(), addImageDTO.getUrl(), addImageDTO.getBase64Image());
+        return imageService.add(addImageDTO.getScanId(), addImageDTO.getUrl(), addImageDTO.getImage());
     }
 
     @GetMapping

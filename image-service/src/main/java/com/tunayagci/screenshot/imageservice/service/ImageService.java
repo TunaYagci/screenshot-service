@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ImageService {
 
-    ImageReference add(String scanId, String url, String base64Image);
+    ImageReference add(String scanId, String url, byte[] base64Image);
 
     List<ImageReference> get(String scanId);
 

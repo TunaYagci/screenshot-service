@@ -1,13 +1,13 @@
 package com.tunayagci.screenshot.eventregistry.feign;
 
 public class ImageReference {
-    private String base64Image;
+   private byte[] image;
 
-    public ImageReference(String base64Image) {
-        this.base64Image = base64Image;
+    public ImageReference(byte[] image) {
+        this.image = image;
     }
 
-    public String getBase64Image() {
-        return base64Image;
+    public byte[] getImage() {
+        return image;
     }
 }

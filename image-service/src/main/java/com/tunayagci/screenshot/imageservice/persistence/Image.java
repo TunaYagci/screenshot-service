@@ -16,8 +16,8 @@ public class Image {
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationTime;
 
-    @Column(name = "image", nullable = false, updatable = false, columnDefinition = "TEXT")
-    private String base64Image;
+    @Lob
+    private byte[] imageBytes;
 
     @Column(nullable = false)
     private String scanId;
@@ -60,11 +60,11 @@ public class Image {
         this.creationTime = creationTime;
     }
 
-    public String getBase64Image() {
-        return base64Image;
+    public byte[] getImageBytes() {
+        return imageBytes;
     }
 
-    public void setBase64Image(String base64Image) {
-        this.base64Image = base64Image;
+    public void setImageBytes(byte[] imageBytes) {
+        this.imageBytes = imageBytes;
     }
 }

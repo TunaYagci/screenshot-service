@@ -34,15 +34,15 @@ public class ScreenshotConsumer {
         logger.info(scanRegisteredEvent.toString());
         final String scanId = scanRegisteredEvent.getScanId();
         final String url = scanRegisteredEvent.getUrl();
-        String base64Image;
+        byte[] image;
         try {
-            base64Image = screenshotCaptureService.getScreenshot();
+            image = screenshotCaptureService.getScreenshot();
         } catch (Exception e) {
             logger.error("Cannot get screenshot", e);
             screenshotStatusProducer.failEvent(scanId, scanId, e.getMessage(), url);
             return;
         }
+        imageClient.uploadImage(new AddImageDTO(scanId, url, image));
         screenshotStatusProducer.successEvent(scanId, scanId, url);
-        imageClient.uploadImage(new AddImageDTO(scanId, url, base64Image));
     }
 }

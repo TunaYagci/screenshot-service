@@ -3,12 +3,12 @@ package com.tunayagci.screenshot.eventregistry.feign;
 public class AddImageDTO {
     private String scanId;
     private String url;
-    private String base64Image;
+    private byte[] image;
 
-    public AddImageDTO(String scanId, String url, String base64Image) {
+    public AddImageDTO(String scanId, String url, byte[] image) {
         this.scanId = scanId;
         this.url = url;
-        this.base64Image = base64Image;
+        this.image = image;
     }
 
     public String getScanId() {
@@ -19,7 +19,7 @@ public class AddImageDTO {
         return url;
     }
 
-    public String getBase64Image() {
-        return base64Image;
+    public byte[] getImage() {
+        return image;
     }
 }

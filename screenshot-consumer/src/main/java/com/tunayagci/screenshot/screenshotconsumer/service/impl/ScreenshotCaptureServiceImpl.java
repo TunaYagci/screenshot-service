@@ -17,13 +17,12 @@ import javax.imageio.stream.ImageOutputStream;
 import javax.imageio.stream.MemoryCacheImageOutputStream;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.util.Base64;
 
 @Service
 public class ScreenshotCaptureServiceImpl implements ScreenshotCaptureService {
     private static final Logger logger = LoggerFactory.getLogger(ScreenshotCaptureServiceImpl.class);
 
-    public String getScreenshot() throws Exception {
+    public byte[] getScreenshot() throws Exception {
         WebDriver webDriver = new ChromeDriver();
         BufferedImage image;
         try {
@@ -56,8 +55,7 @@ public class ScreenshotCaptureServiceImpl implements ScreenshotCaptureService {
         // Dispose the writer to free resources
         jpgWriter.dispose();
 
-        byte[] jpegData = compressed.toByteArray();
-        return Base64.getEncoder().encodeToString(jpegData);
+        return compressed.toByteArray();
     }
 
 }

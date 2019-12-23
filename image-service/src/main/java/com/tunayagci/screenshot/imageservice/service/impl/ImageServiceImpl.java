@@ -21,20 +21,21 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     @Transactional
-    public ImageReference add(String scanId, String url, String base64Image) {
-        final Image image = new Image();
-        image.setBase64Image(base64Image);
-        image.setScanId(scanId);
-        image.setUrl(url);
-        imageDao.save(image);
-        return new ImageReference(base64Image);
+    public ImageReference add(String scanId, String url, byte[] image) {
+        final Image imageEntity = new Image();
+        imageEntity.setImageBytes(image);
+        imageEntity.setScanId(scanId);
+        imageEntity.setUrl(url);
+        imageDao.save(imageEntity);
+        return new ImageReference(image);
     }
 
     @Override
+    @Transactional
     public List<ImageReference> get(String scanId) {
         return imageDao.findAllByScanId(scanId)
                 .stream()
-                .map(f -> new ImageReference(f.getBase64Image()))
+                .map(f -> new ImageReference(f.getImageBytes()))
                 .collect(Collectors.toList());
     }
 
