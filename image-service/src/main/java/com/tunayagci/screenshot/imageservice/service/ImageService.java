@@ -1,14 +1,16 @@
 package com.tunayagci.screenshot.imageservice.service;
 
-import com.tunayagci.screenshot.eventregistry.feign.ImageReference;
+import com.tunayagci.screenshot.imageservice.controller.dto.ImageReference;
 
 import java.util.List;
 
 public interface ImageService {
 
-    ImageReference add(String scanId, String url, byte[] base64Image);
+    boolean add(String scanId, String url, byte[] image);
 
-    List<ImageReference> get(String scanId);
+    List<ImageReference> findAllByScanId(String scanId);
+
+    byte[] find(String scanId, Long id);
 
     boolean exists(String scanId);
 }

@@ -1,7 +1,6 @@
 package com.tunayagci.screenshot.screenshotconsumer.feignclient;
 
 import com.tunayagci.screenshot.eventregistry.feign.AddImageDTO;
-import com.tunayagci.screenshot.eventregistry.feign.ImageReference;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -9,5 +8,5 @@ import org.springframework.web.bind.annotation.PostMapping;
 public interface ImageClient {
 
     @PostMapping("/image-service/image/")
-    ImageReference uploadImage(AddImageDTO addImageDTO);
+    boolean uploadImage(AddImageDTO addImageDTO);
 }

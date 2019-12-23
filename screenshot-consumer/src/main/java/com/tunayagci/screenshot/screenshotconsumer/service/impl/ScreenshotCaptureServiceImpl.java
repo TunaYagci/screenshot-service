@@ -2,9 +2,12 @@ package com.tunayagci.screenshot.screenshotconsumer.service.impl;
 
 import com.tunayagci.screenshot.screenshotconsumer.service.ScreenshotCaptureService;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import ru.yandex.qatools.ashot.AShot;
 import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
@@ -17,13 +20,17 @@ import javax.imageio.stream.ImageOutputStream;
 import javax.imageio.stream.MemoryCacheImageOutputStream;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 @Service
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class ScreenshotCaptureServiceImpl implements ScreenshotCaptureService {
     private static final Logger logger = LoggerFactory.getLogger(ScreenshotCaptureServiceImpl.class);
 
     public byte[] getScreenshot() throws Exception {
-        WebDriver webDriver = new ChromeDriver();
+        WebDriver webDriver = new RemoteWebDriver(new URL("http://localhost:4444"), DesiredCapabilities.chrome());
+        webDriver.manage().timeouts().implicitlyWait(10L, TimeUnit.SECONDS);
         BufferedImage image;
         try {
             image = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(5000))

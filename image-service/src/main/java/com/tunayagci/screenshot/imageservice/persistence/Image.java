@@ -5,7 +5,7 @@ import org.springframework.data.annotation.CreatedDate;
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity
+@Entity(name = "image")
 public class Image {
     @Id
     @GeneratedValue

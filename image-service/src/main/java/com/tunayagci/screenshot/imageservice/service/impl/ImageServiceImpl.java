@@ -1,9 +1,10 @@
 package com.tunayagci.screenshot.imageservice.service.impl;
 
-import com.tunayagci.screenshot.eventregistry.feign.ImageReference;
+import com.tunayagci.screenshot.imageservice.controller.dto.ImageReference;
 import com.tunayagci.screenshot.imageservice.dao.ImageDao;
 import com.tunayagci.screenshot.imageservice.persistence.Image;
 import com.tunayagci.screenshot.imageservice.service.ImageService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +14,9 @@ import java.util.stream.Collectors;
 @Service
 public class ImageServiceImpl implements ImageService {
 
+    @Value("${spring.application.name}")
+    private String applicationName;
+
     private ImageDao imageDao;
 
     public ImageServiceImpl(ImageDao imageDao) {
@@ -21,22 +25,34 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     @Transactional
-    public ImageReference add(String scanId, String url, byte[] image) {
+    public boolean add(String scanId, String url, byte[] image) {
         final Image imageEntity = new Image();
         imageEntity.setImageBytes(image);
         imageEntity.setScanId(scanId);
         imageEntity.setUrl(url);
         imageDao.save(imageEntity);
-        return new ImageReference(image);
+        return true;
     }
 
     @Override
     @Transactional
-    public List<ImageReference> get(String scanId) {
+    public List<ImageReference> findAllByScanId(String scanId) {
         return imageDao.findAllByScanId(scanId)
                 .stream()
-                .map(f -> new ImageReference(f.getImageBytes()))
+                .map(ImageReference::of)
+                .peek(f -> f.setImageURL(constructImageUrl(f.getId(), f.getScanId())))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public byte[] find(String scanId, Long id) {
+        return imageDao.findById(id)
+                .map(Image::getImageBytes)
+                .orElseThrow(() -> new NullPointerException("Cannot find image"));
+    }
+
+    private String constructImageUrl(Long id, String scanId) {
+        return String.format("%s/image/%s/%d", applicationName, scanId, id);
     }
 
     @Override
