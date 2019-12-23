@@ -1,28 +1,28 @@
 package com.tunayagci.screenshot.screenshotconsumer.consumer;
 
 import com.tunayagci.screenshot.eventregistry.event.scan.ScanRegisteredEvent;
+import com.tunayagci.screenshot.eventregistry.feign.AddImageDTO;
 import com.tunayagci.screenshot.eventregistry.topic.Topics;
+import com.tunayagci.screenshot.screenshotconsumer.feignclient.ImageClient;
 import com.tunayagci.screenshot.screenshotconsumer.producer.ScreenshotStatusProducer;
-import com.tunayagci.screenshot.screenshotconsumer.producer.UploadImageProducer;
 import com.tunayagci.screenshot.screenshotconsumer.service.ScreenshotCaptureService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 @Service
 public class ScreenshotConsumer {
     private static final Logger logger = LoggerFactory.getLogger(ScreenshotConsumer.class);
 
-    private UploadImageProducer uploadImageProducer;
+    private ImageClient imageClient;
     private ScreenshotStatusProducer screenshotStatusProducer;
     private ScreenshotCaptureService screenshotCaptureService;
 
-    public ScreenshotConsumer(UploadImageProducer uploadImageProducer, ScreenshotStatusProducer screenshotStatusProducer, ScreenshotCaptureService screenshotCaptureService) {
-        this.uploadImageProducer = uploadImageProducer;
+    public ScreenshotConsumer(ImageClient imageClient, ScreenshotStatusProducer screenshotStatusProducer, ScreenshotCaptureService screenshotCaptureService) {
+        this.imageClient = imageClient;
         this.screenshotStatusProducer = screenshotStatusProducer;
         this.screenshotCaptureService = screenshotCaptureService;
     }
@@ -43,7 +43,6 @@ public class ScreenshotConsumer {
             return;
         }
         screenshotStatusProducer.successEvent(scanId, scanId, url);
-        uploadImageProducer.uploadRequest(UUID.randomUUID().toString(),
-                scanId, base64Image, url);
+        imageClient.uploadImage(new AddImageDTO(scanId, url, base64Image));
     }
 }

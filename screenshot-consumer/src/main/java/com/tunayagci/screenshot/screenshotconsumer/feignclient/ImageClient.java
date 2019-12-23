@@ -1,4 +1,4 @@
-package com.tunayagci.screenshot.uploadconsumer.feignclient;
+package com.tunayagci.screenshot.screenshotconsumer.feignclient;
 
 import com.tunayagci.screenshot.eventregistry.feign.AddImageDTO;
 import com.tunayagci.screenshot.eventregistry.feign.ImageReference;

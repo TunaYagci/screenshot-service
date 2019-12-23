@@ -8,8 +8,6 @@ public class Topics {
 
     public static final String SCREENSHOT_STATUS = "screenshot_status";
 
-    public static final String UPLOAD_IMAGE_STATUS = "upload_image_status";
-
     public static final String SCAN_STATUS = "scan_status";
 
 
