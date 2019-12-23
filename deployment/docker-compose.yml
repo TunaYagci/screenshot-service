@@ -68,7 +68,7 @@ services:
 
   psql-status-service:
     container_name: psql-status-service
-    build: postgres/
+    build: postgres-status/
     volumes:
       - db-data:/var/lib/postgresql/data/
     ports:
@@ -79,17 +79,62 @@ services:
   status-service:
     container_name: status-service
     build: ../status-service/
-    networks:
-      - status
-      - kafka
-      - eureka
     ports:
       - "8080:8080"
     depends_on:
       - psql-status-service
-      - eureka
       - zuul-proxy
+    networks:
+      - status
+      - kafka
+      - eureka
 
+  scan-service:
+    container_name: scan-service
+    build: ../scan-service/
+    ports:
+      - "8080:8080"
+    depends_on:
+      - zuul-proxy
+    networks:
+      - kafka
+      - eureka
+
+  screenshot-consumer:
+    container_name: screenshot-consumer
+    build: ../screenshot-consumer/
+    ports:
+      - "8080:8080"
+    depends_on:
+      - kafka
+      - zuul-proxy
+    networks:
+      - kafka
+      - eureka
+
+  image-service:
+    container_name: image-service
+    build: ../image-service/
+    ports:
+      - "8080:8080"
+    depends_on:
+      - kafka
+      - zuul-proxy
+      - psql-image-service
+    networks:
+      - kafka
+      - eureka
+      - image-service
+
+  psql-image-service:
+    container_name: psql-image-service
+    build: postgres-image/
+    volumes:
+      - db-data:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
+    networks:
+      - image-service
 
 
 volumes:
@@ -99,3 +144,4 @@ networks:
   status:
   kafka:
   eureka:
+  image-service:
