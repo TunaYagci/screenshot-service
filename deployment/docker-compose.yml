@@ -54,6 +54,7 @@ services:
       - "8761:8761"
     networks:
       - eureka
+      - kafka
 
   zuul-proxy:
     container_name: zuul
