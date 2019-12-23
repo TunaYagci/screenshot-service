@@ -1,7 +1,6 @@
 version: '3.2'
 
 services:
-  # https://github.com/wurstmeister/zookeeper-docker
   zookeeper:
     container_name: zookeeper
     image: wurstmeister/zookeeper:latest
@@ -10,7 +9,6 @@ services:
     ports:
       - "2181:2181"
 
-  # https://hub.docker.com/r/confluentinc/cp-kafka/
   kafka:
     container_name: kafka
     image: wurstmeister/kafka:2.12-2.2.1
@@ -44,3 +42,34 @@ services:
       - zookeeper
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+
+  eureka:
+    container_name: eureka
+    build: ../eureka-server/
+    ports:
+      - "8761:8761"
+
+  zuul-proxy:
+    container_name: zuul
+    build: ../zuul-server/
+    ports:
+      - "8765:8765"
+
+  psql-status-service:
+    container_name: psql-status-service
+    build: postgres/
+    volumes:
+      - db-data:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
+    networks:
+      - status
+
+
+
+volumes:
+  db-data:
+
+networks:
+  status:
+    external: true
