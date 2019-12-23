@@ -1,6 +1,6 @@
 package com.tunayagci.screenshot.statusservice.persistence;
 
-import org.springframework.data.annotation.CreatedDate;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,8 +12,8 @@ public abstract class UniqueEntity implements Serializable {
     @GeneratedValue
     private Long id;
 
-    @Column(name = "creation_time")
-    @CreatedDate
+    @Column(name = "creation_time", updatable = false)
+    @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationTime;
 

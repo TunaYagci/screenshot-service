@@ -37,7 +37,7 @@ public class ScreenshotConsumer {
         final String url = scanRegisteredEvent.getUrl();
         byte[] image;
         try {
-            image = screenshotCaptureServiceObjectFactory.getObject().getScreenshot();
+            image = screenshotCaptureServiceObjectFactory.getObject().getScreenshot(url);
         } catch (Exception e) {
             logger.error("Cannot get screenshot", e);
             screenshotStatusProducer.failEvent(scanId, scanId, e.getMessage(), url);

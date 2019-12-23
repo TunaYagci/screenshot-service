@@ -1,6 +1,6 @@
 package com.tunayagci.screenshot.imageservice.persistence;
 
-import org.springframework.data.annotation.CreatedDate;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -11,8 +11,8 @@ public class Image {
     @GeneratedValue
     public Long id;
 
-    @Column(name = "creation_time")
-    @CreatedDate
+    @Column(name = "creation_time", updatable = false)
+    @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationTime;
 
