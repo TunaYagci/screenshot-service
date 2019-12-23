@@ -8,6 +8,8 @@ services:
       ZOOKEEPER_CLIENT_PORT: 2181
     ports:
       - "2181:2181"
+    networks:
+      - kafka
 
   kafka:
     container_name: kafka
@@ -42,18 +44,26 @@ services:
       - zookeeper
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - kafka
 
   eureka:
     container_name: eureka
     build: ../eureka-server/
     ports:
       - "8761:8761"
+    networks:
+      - eureka
 
   zuul-proxy:
     container_name: zuul
     build: ../zuul-server/
     ports:
       - "8765:8765"
+    depends_on:
+      - eureka
+    networks:
+      - eureka
 
   psql-status-service:
     container_name: psql-status-service
@@ -65,6 +75,20 @@ services:
     networks:
       - status
 
+  status-service:
+    container_name: status-service
+    build: ../status-service/
+    networks:
+      - status
+      - kafka
+      - eureka
+    ports:
+      - "8080:8080"
+    depends_on:
+      - psql-status-service
+      - eureka
+      - zuul-proxy
+
 
 
 volumes:
@@ -72,4 +96,5 @@ volumes:
 
 networks:
   status:
-    external: true
+  kafka:
+  eureka:
