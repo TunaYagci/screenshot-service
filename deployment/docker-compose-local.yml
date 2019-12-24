@@ -1,4 +1,4 @@
-version: '3.2'
+version: '2.4'
 
 services:
   zookeeper:
@@ -85,9 +85,9 @@ services:
       - psql-status-service
       - zuul-proxy
     networks:
+      - status
       - kafka
       - eureka
-      - status
 
   scan-service:
     container_name: scan-service
