@@ -5,6 +5,7 @@ import com.tunayagci.screenshot.eventregistry.event.scan.ScanQueuedEvent;
 import com.tunayagci.screenshot.eventregistry.event.scan.ScanStartedEvent;
 import com.tunayagci.screenshot.eventregistry.event.scan.screenshot.ScreenshotCompletedEvent;
 import com.tunayagci.screenshot.eventregistry.event.scan.screenshot.ScreenshotFailedEvent;
+import com.tunayagci.screenshot.statusservice.controller.dto.ScanDTO;
 import com.tunayagci.screenshot.statusservice.generic.ScanStatus;
 
 public interface StatusService {
@@ -20,4 +21,6 @@ public interface StatusService {
     void screenshotCompleted(ScreenshotCompletedEvent scanEvent);
 
     void screenshotFailed(ScreenshotFailedEvent scanEvent);
+
+    ScanDTO getScanResult(String scanId);
 }

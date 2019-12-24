@@ -22,12 +22,12 @@ public class ScreenshotStatusProducer {
     }
 
     public SendResult<String, ScreenshotCompletedEvent> successEvent(String key, String scanId, String url, String imageURL) throws ExecutionException, InterruptedException {
-        return successProducer.send(Topics.SCREENSHOT_STATUS, key, new ScreenshotCompletedEvent(scanId, new Date(), url))
+        return successProducer.send(Topics.SCAN_STATUS, key, new ScreenshotCompletedEvent(scanId, new Date(), url, imageURL))
                 .get();
     }
 
     public SendResult<String, ScreenshotFailedEvent> failEvent(String key, String scanId, String errorMessage, String url) throws ExecutionException, InterruptedException {
-        return failProducer.send(Topics.SCREENSHOT_STATUS, key, new ScreenshotFailedEvent(scanId, new Date(), errorMessage, url))
+        return failProducer.send(Topics.SCAN_STATUS, key, new ScreenshotFailedEvent(scanId, new Date(), errorMessage, url))
                 .get();
     }
 }

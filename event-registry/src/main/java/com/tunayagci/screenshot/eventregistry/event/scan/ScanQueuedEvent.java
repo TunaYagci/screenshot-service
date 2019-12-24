@@ -8,6 +8,9 @@ public class ScanQueuedEvent extends ScanEvent {
 
     private String url;
 
+    @JsonProperty("class")
+    private String className = "com.tunayagci.screenshot.eventregistry.event.scan.ScanQueuedEvent";
+
     public ScanQueuedEvent(@JsonProperty("scanId") String scanId,
                            @JsonProperty("creationTime") Date creationTime,
                            @JsonProperty("url") String url) {
@@ -19,10 +22,15 @@ public class ScanQueuedEvent extends ScanEvent {
         return url;
     }
 
+    public String getClassName() {
+        return className;
+    }
+
     @Override
     public String toString() {
-        return "ScanRegisteredEvent{" +
+        return "ScanQueuedEvent{" +
                 "url='" + url + '\'' +
+                ", className='" + className + '\'' +
                 '}';
     }
 }

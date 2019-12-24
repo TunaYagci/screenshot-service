@@ -9,6 +9,9 @@ public class ScreenshotCompletedEvent extends ScanEvent {
     private String url;
     private String imageURL;
 
+    @JsonProperty("class")
+    private String className = "com.tunayagci.screenshot.eventregistry.event.scan.screenshot.ScreenshotCompletedEvent";
+
     public ScreenshotCompletedEvent(
             @JsonProperty("scanId") String scanId,
             @JsonProperty("creationTime") Date creationTime,
@@ -16,6 +19,7 @@ public class ScreenshotCompletedEvent extends ScanEvent {
             @JsonProperty("imageURL") String imageURL) {
         super(scanId, creationTime);
         this.url = url;
+        this.imageURL = imageURL;
     }
 
     public String getImageURL() {
@@ -24,5 +28,17 @@ public class ScreenshotCompletedEvent extends ScanEvent {
 
     public String getUrl() {
         return url;
+    }
+
+    @Override
+    public String toString() {
+        return "ScreenshotCompletedEvent{" +
+                "url='" + url + '\'' +
+                ", imageURL='" + imageURL + '\'' +
+                '}';
+    }
+
+    public String getClassName() {
+        return className;
     }
 }

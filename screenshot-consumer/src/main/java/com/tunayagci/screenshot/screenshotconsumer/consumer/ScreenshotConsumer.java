@@ -12,8 +12,6 @@ import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
-import java.util.concurrent.ExecutionException;
-
 @Service
 public class ScreenshotConsumer {
     private static final Logger logger = LoggerFactory.getLogger(ScreenshotConsumer.class);
@@ -31,19 +29,29 @@ public class ScreenshotConsumer {
     @KafkaListener(id = "webclient-consumers",
             topics = Topics.SCAN_REQUEST,
             containerFactory = "kafkaJsonListenerContainerFactory")
-    public void consumeMessage(ScanQueuedEvent scanRegisteredEvent) throws ExecutionException, InterruptedException {
+    public void consumeMessage(ScanQueuedEvent scanRegisteredEvent) {
         logger.info(scanRegisteredEvent.toString());
         final String scanId = scanRegisteredEvent.getScanId();
         final String url = scanRegisteredEvent.getUrl();
         byte[] image;
+
         try {
             image = screenshotCaptureServiceObjectFactory.getObject().getScreenshot(url);
         } catch (Exception e) {
             logger.error("Cannot get screenshot", e);
-            screenshotStatusProducer.failEvent(scanId, scanId, e.getMessage(), url);
+            try {
+                screenshotStatusProducer.failEvent(scanId, scanId, e.getMessage(), url);
+            } catch (Exception e2) {
+                logger.error("Cannot publish fail event", e2);
+            }
             return;
         }
+
         final String imageURL = imageClient.uploadImage(new AddImageDTO(scanId, url, image));
-        screenshotStatusProducer.successEvent(scanId, scanId, url, imageURL);
+        try {
+            screenshotStatusProducer.successEvent(scanId, scanId, url, imageURL);
+        } catch (Exception e) {
+            logger.error("Cannot publish success event", e);
+        }
     }
 }

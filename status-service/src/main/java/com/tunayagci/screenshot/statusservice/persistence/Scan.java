@@ -15,10 +15,12 @@ public class Scan extends UniqueEntity {
     @Column(name = "scan_status", nullable = false)
     private ScanStatus scanStatus;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "scan")
     private List<ScanResult> scanResults = new ArrayList<>();
 
-    @CollectionTable(name = "scan_request_urls")
+    @ElementCollection
+    @CollectionTable(name = "scan_request_urls", joinColumns = @JoinColumn(name = "scan_id"))
+    @Column(name = "request_urls")
     private List<String> requestUrls = new ArrayList<>();
 
     public Scan() {

@@ -9,6 +9,9 @@ public class ScreenshotFailedEvent extends ScanEvent {
     private String errorMessage;
     private String url;
 
+    @JsonProperty("class")
+    private String className = "com.tunayagci.screenshot.eventregistry.event.scan.screenshot.ScreenshotFailedEvent";
+
     public ScreenshotFailedEvent(
             @JsonProperty("scanId") String scanId,
             @JsonProperty("creationTime") Date creationTime,
@@ -25,5 +28,17 @@ public class ScreenshotFailedEvent extends ScanEvent {
 
     public String getUrl() {
         return url;
+    }
+
+    public String getClassName() {
+        return className;
+    }
+
+    @Override
+    public String toString() {
+        return "ScreenshotFailedEvent{" +
+                "errorMessage='" + errorMessage + '\'' +
+                ", url='" + url + '\'' +
+                '}';
     }
 }

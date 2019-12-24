@@ -4,9 +4,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
 
+// TODO: Nobody throws this
 public class ScanFinishedEvent extends ScanEvent {
     private String url;
     private String errorMessage;
+
+    @JsonProperty("class")
+    private String className = "com.tunayagci.screenshot.eventregistry.event.scan.ScanFinishedEvent";
 
     public ScanFinishedEvent(
             @JsonProperty("scanId") String scanId,
@@ -26,9 +30,13 @@ public class ScanFinishedEvent extends ScanEvent {
         return errorMessage;
     }
 
+    public String getClassName() {
+        return className;
+    }
+
     @Override
     public String toString() {
-        return "ScanFailedEvent{" +
+        return "ScanFinishedEvent{" +
                 "url='" + url + '\'' +
                 ", errorMessage='" + errorMessage + '\'' +
                 '}';

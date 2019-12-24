@@ -8,6 +8,9 @@ public class ScanFailedEvent extends ScanEvent {
     private String url;
     private String errorMessage;
 
+    @JsonProperty("class")
+    private String className = "com.tunayagci.screenshot.eventregistry.event.scan.ScanFailedEvent";
+
     public ScanFailedEvent(
             @JsonProperty("scanId") String scanId,
             @JsonProperty("creationTime") Date creationTime,
@@ -24,6 +27,10 @@ public class ScanFailedEvent extends ScanEvent {
 
     public String getErrorMessage() {
         return errorMessage;
+    }
+
+    public String getClassName() {
+        return className;
     }
 
     @Override

@@ -34,7 +34,7 @@ public class ImageServiceImpl implements ImageService {
         imageEntity.setScanId(scanId);
         imageEntity.setUrl(url);
         final Image savedImage = imageDao.save(imageEntity);
-        return String.format("%s/image/%s/%d", applicationName, scanId, savedImage.getId());
+        return constructImageUrl(savedImage.getId(), scanId);
     }
 
     @Override

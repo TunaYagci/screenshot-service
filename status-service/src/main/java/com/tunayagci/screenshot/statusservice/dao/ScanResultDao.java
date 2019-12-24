@@ -10,5 +10,5 @@ import java.util.Optional;
 @Repository
 public interface ScanResultDao extends JpaRepository<ScanResult, Long> {
 
-    Optional<ScanResult> findFirstByScanAndUrl(Scan scan, String url);
+    Optional<ScanResult> findFirstByScanAndUrlIs(Scan scan, String url);
 }

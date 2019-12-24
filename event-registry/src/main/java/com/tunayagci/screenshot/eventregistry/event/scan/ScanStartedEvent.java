@@ -8,6 +8,9 @@ import java.util.List;
 public class ScanStartedEvent extends ScanEvent {
     private List<String> urls;
 
+    @JsonProperty("class")
+    private String className = "com.tunayagci.screenshot.eventregistry.event.scan.ScanStartedEvent";
+
     public ScanStartedEvent(
             @JsonProperty("scanId") String scanId,
             @JsonProperty("creationTime") Date creationTime,
@@ -18,6 +21,10 @@ public class ScanStartedEvent extends ScanEvent {
 
     public List<String> getUrls() {
         return urls;
+    }
+
+    public String getClassName() {
+        return className;
     }
 
     @Override

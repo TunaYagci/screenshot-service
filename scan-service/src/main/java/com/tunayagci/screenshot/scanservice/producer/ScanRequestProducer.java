@@ -19,7 +19,9 @@ public class ScanRequestProducer {
     }
 
     public SendResult<String, ScanQueuedEvent> scanRequest(String key, String scanId, String url) throws ExecutionException, InterruptedException {
-        return producer.send(Topics.SCREENSHOT_REQUEST, key, new ScanQueuedEvent(scanId, new Date(), url))
+        producer.send(Topics.SCAN_REQUEST, key, new ScanQueuedEvent(scanId, new Date(), url))
+                .get();
+        return producer.send(Topics.SCAN_STATUS, key, new ScanQueuedEvent(scanId, new Date(), url))
                 .get();
     }
 }

@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface ScanDao extends JpaRepository<Scan, Long> {
-    Optional<Scan> findFirstByScanId(String scanId);
+    Optional<Scan> findFirstByScanRegisterId(String scanId);
 }
