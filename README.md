@@ -24,6 +24,25 @@ This project is called **Screenshot Service** build with the help of mostly **Sp
 
 ## Installation
 
+The JAVA source classes must be built either locally or images with jars can be provided through Docker Hub.
+Images in Docker Hub contains **fat jars**.
+
 ### Build locally
 
-### Build from image
+1. Make sure you have installed **Maven 3+** and it is in your PATH variables. You can test it as ```mvn -version```
+1. Clone the repository
+1. ```cd /deployment```
+1. ```sh build-all.sh```
+1. ```docker-compose -f docker-compose-local.yml up -d``` 
+
+### Or build from images
+
+1. Clone the repository
+1. ``` cd /deployment ```
+1. ```docker-compose up -d ```
+
+## Architecture
+TODO.
+
+## Usage 
+Usage with python client. TODO.
