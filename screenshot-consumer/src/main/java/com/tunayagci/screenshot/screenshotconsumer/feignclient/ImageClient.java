@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.PostMapping;
 public interface ImageClient {
 
     @PostMapping("/image-service/image/")
-    boolean uploadImage(AddImageDTO addImageDTO);
+    String uploadImage(AddImageDTO addImageDTO);
 }

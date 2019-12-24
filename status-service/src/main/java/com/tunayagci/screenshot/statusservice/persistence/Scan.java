@@ -2,30 +2,34 @@ package com.tunayagci.screenshot.statusservice.persistence;
 
 import com.tunayagci.screenshot.statusservice.generic.ScanStatus;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Scan extends UniqueEntity {
 
-    private String scanId;
+    @Column(name = "scan_register_id", nullable = false, updatable = false)
+    private String scanRegisterId;
+
+    @Column(name = "scan_status", nullable = false)
     private ScanStatus scanStatus;
 
     @OneToMany(fetch = FetchType.EAGER)
     private List<ScanResult> scanResults = new ArrayList<>();
 
+    @CollectionTable(name = "scan_request_urls")
+    private List<String> requestUrls = new ArrayList<>();
+
     public Scan() {
     }
 
-    public String getScanId() {
-        return scanId;
+    public String getScanRegisterId() {
+        return scanRegisterId;
     }
 
-    public void setScanId(String scanId) {
-        this.scanId = scanId;
+    public void setScanRegisterId(String scanRegisterId) {
+        this.scanRegisterId = scanRegisterId;
     }
 
     public ScanStatus getScanStatus() {
@@ -42,5 +46,13 @@ public class Scan extends UniqueEntity {
 
     public void setScanResults(List<ScanResult> scanResults) {
         this.scanResults = scanResults;
+    }
+
+    public List<String> getRequestUrls() {
+        return requestUrls;
+    }
+
+    public void setRequestUrls(List<String> requestUrls) {
+        this.requestUrls = requestUrls;
     }
 }

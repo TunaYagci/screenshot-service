@@ -4,13 +4,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
 
-public class ScanRegisteredEvent extends ScanEvent {
+public class ScanQueuedEvent extends ScanEvent {
 
     private String url;
 
-    public ScanRegisteredEvent(@JsonProperty("scanId") String scanId,
-                               @JsonProperty("creationTime") Date creationTime,
-                               @JsonProperty("url") String url) {
+    public ScanQueuedEvent(@JsonProperty("scanId") String scanId,
+                           @JsonProperty("creationTime") Date creationTime,
+                           @JsonProperty("url") String url) {
         super(scanId, creationTime);
         this.url = url;
     }

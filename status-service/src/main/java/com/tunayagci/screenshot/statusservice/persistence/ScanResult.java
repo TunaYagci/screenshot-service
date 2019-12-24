@@ -7,26 +7,29 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class ScanResult extends UniqueEntity {
-    private Long url;
+    private String url;
     private String imageRef;
     private ScanStatus scanStatus;
     private String message;
-
     @ManyToOne
     private Scan scan;
 
     public ScanResult() {
     }
 
+    public void setScan(Scan scan) {
+        this.scan = scan;
+    }
+
     public Scan getScan() {
         return scan;
     }
 
-    public Long getUrl() {
+    public String getUrl() {
         return url;
     }
 
-    public void setUrl(Long url) {
+    public void setUrl(String url) {
         this.url = url;
     }
 

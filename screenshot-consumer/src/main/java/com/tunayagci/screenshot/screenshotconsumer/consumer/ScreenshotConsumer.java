@@ -1,6 +1,6 @@
 package com.tunayagci.screenshot.screenshotconsumer.consumer;
 
-import com.tunayagci.screenshot.eventregistry.event.scan.ScanRegisteredEvent;
+import com.tunayagci.screenshot.eventregistry.event.scan.ScanQueuedEvent;
 import com.tunayagci.screenshot.eventregistry.feign.AddImageDTO;
 import com.tunayagci.screenshot.eventregistry.topic.Topics;
 import com.tunayagci.screenshot.screenshotconsumer.feignclient.ImageClient;
@@ -29,9 +29,9 @@ public class ScreenshotConsumer {
     }
 
     @KafkaListener(id = "webclient-consumers",
-            topics = Topics.SCREENSHOT_REQUEST,
+            topics = Topics.SCAN_REQUEST,
             containerFactory = "kafkaJsonListenerContainerFactory")
-    public void consumeMessage(ScanRegisteredEvent scanRegisteredEvent) throws ExecutionException, InterruptedException {
+    public void consumeMessage(ScanQueuedEvent scanRegisteredEvent) throws ExecutionException, InterruptedException {
         logger.info(scanRegisteredEvent.toString());
         final String scanId = scanRegisteredEvent.getScanId();
         final String url = scanRegisteredEvent.getUrl();
@@ -43,7 +43,7 @@ public class ScreenshotConsumer {
             screenshotStatusProducer.failEvent(scanId, scanId, e.getMessage(), url);
             return;
         }
-        imageClient.uploadImage(new AddImageDTO(scanId, url, image));
-        screenshotStatusProducer.successEvent(scanId, scanId, url);
+        final String imageURL = imageClient.uploadImage(new AddImageDTO(scanId, url, image));
+        screenshotStatusProducer.successEvent(scanId, scanId, url, imageURL);
     }
 }

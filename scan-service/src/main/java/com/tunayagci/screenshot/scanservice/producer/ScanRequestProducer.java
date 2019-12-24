@@ -1,6 +1,6 @@
 package com.tunayagci.screenshot.scanservice.producer;
 
-import com.tunayagci.screenshot.eventregistry.event.scan.ScanRegisteredEvent;
+import com.tunayagci.screenshot.eventregistry.event.scan.ScanQueuedEvent;
 import com.tunayagci.screenshot.eventregistry.topic.Topics;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
@@ -12,14 +12,14 @@ import java.util.concurrent.ExecutionException;
 @Service
 public class ScanRequestProducer {
 
-    private KafkaTemplate<String, ScanRegisteredEvent> producer;
+    private KafkaTemplate<String, ScanQueuedEvent> producer;
 
-    public ScanRequestProducer(KafkaTemplate<String, ScanRegisteredEvent> producer) {
+    public ScanRequestProducer(KafkaTemplate<String, ScanQueuedEvent> producer) {
         this.producer = producer;
     }
 
-    public SendResult<String, ScanRegisteredEvent> scanRequest(String key, String scanId, String url) throws ExecutionException, InterruptedException {
-        return producer.send(Topics.SCREENSHOT_REQUEST, key, new ScanRegisteredEvent(scanId, new Date(), url))
+    public SendResult<String, ScanQueuedEvent> scanRequest(String key, String scanId, String url) throws ExecutionException, InterruptedException {
+        return producer.send(Topics.SCREENSHOT_REQUEST, key, new ScanQueuedEvent(scanId, new Date(), url))
                 .get();
     }
 }

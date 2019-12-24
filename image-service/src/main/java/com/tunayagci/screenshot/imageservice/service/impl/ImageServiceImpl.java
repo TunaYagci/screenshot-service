@@ -17,6 +17,9 @@ public class ImageServiceImpl implements ImageService {
     @Value("${spring.application.name}")
     private String applicationName;
 
+    @Value("${application.dns}")
+    private String applicationDNS;
+
     private ImageDao imageDao;
 
     public ImageServiceImpl(ImageDao imageDao) {
@@ -25,13 +28,13 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     @Transactional
-    public boolean add(String scanId, String url, byte[] image) {
+    public String add(String scanId, String url, byte[] image) {
         final Image imageEntity = new Image();
         imageEntity.setImageBytes(image);
         imageEntity.setScanId(scanId);
         imageEntity.setUrl(url);
-        imageDao.save(imageEntity);
-        return true;
+        final Image savedImage = imageDao.save(imageEntity);
+        return String.format("%s/image/%s/%d", applicationName, scanId, savedImage.getId());
     }
 
     @Override
@@ -52,7 +55,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     private String constructImageUrl(Long id, String scanId) {
-        return String.format("%s/image/%s/%d", applicationName, scanId, id);
+        return String.format("%s/%s/image/%s/%d", applicationDNS, applicationName, scanId, id);
     }
 
     @Override

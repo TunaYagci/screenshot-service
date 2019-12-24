@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ImageService {
 
-    boolean add(String scanId, String url, byte[] image);
+    String add(String scanId, String url, byte[] image);
 
     List<ImageReference> findAllByScanId(String scanId);
 

@@ -19,7 +19,7 @@ public class ImageAPI {
     }
 
     @PostMapping
-    public boolean upload(@RequestBody AddImageDTO addImageDTO) {
+    public String upload(@RequestBody AddImageDTO addImageDTO) {
         return imageService.add(addImageDTO.getScanId(), addImageDTO.getUrl(), addImageDTO.getImage());
     }
 

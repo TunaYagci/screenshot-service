@@ -21,7 +21,7 @@ public class ScreenshotStatusProducer {
         this.failProducer = failProducer;
     }
 
-    public SendResult<String, ScreenshotCompletedEvent> successEvent(String key, String scanId, String url) throws ExecutionException, InterruptedException {
+    public SendResult<String, ScreenshotCompletedEvent> successEvent(String key, String scanId, String url, String imageURL) throws ExecutionException, InterruptedException {
         return successProducer.send(Topics.SCREENSHOT_STATUS, key, new ScreenshotCompletedEvent(scanId, new Date(), url))
                 .get();
     }
