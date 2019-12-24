@@ -111,6 +111,7 @@ services:
     networks:
       - kafka
       - eureka
+      - screenshot
 
   image-service:
     container_name: image-service
@@ -136,6 +137,17 @@ services:
     networks:
       - image-service
 
+  chrome:
+    container_name: chrome
+    image: robcherry/docker-chromedriver:latest
+    privileged: true
+    environment:
+      CHROMEDRIVER_WHITELISTED_IPS: ""
+    ports:
+      - "4444:4444"
+    networks:
+      - screenshot
+
 
 volumes:
   db-data-for-status:
@@ -146,3 +158,4 @@ networks:
   kafka:
   eureka:
   image-service:
+  screenshot:
