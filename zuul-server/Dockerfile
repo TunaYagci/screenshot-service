@@ -1,4 +1,5 @@
 FROM openjdk:8-jre-alpine
+MAINTAINER tunayagci
 COPY dist/app.jar .
 COPY wait-for-it.sh .
 RUN chmod +x /wait-for-it.sh
