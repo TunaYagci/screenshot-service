@@ -50,7 +50,7 @@ Images in Docker Hub contains **fat jars**.
 
 ## Local development
 
-(If you want to run the services locally in your IDEA)
+(If you want to run the services locally in your IDE)
 
 1. You still need Docker to run Kafka and Chrome services.
 1. `cd /dev`
