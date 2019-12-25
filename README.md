@@ -2,13 +2,13 @@
 This project is called **Screenshot Service** build with the help of mostly **Spring Cloud**, a.k.a **Netflix OSS**.  
 
 ### There are 3 microservices:  
-* **Scan**: Responsible for starting a screenshot request by talking to Kafka.
-* **Image**: This service is responsible for handling&serving images throgh a REST API.
-* **Status**: This service is responsible for result and status of the screenshots. It serves some REST endpoins documented below.
+* [**Scan**](https://hub.docker.com/repository/docker/tunayagci/scan-service): Responsible for starting a screenshot request by talking to Kafka.
+* [**Image**](https://hub.docker.com/repository/docker/tunayagci/image-service): This service is responsible for handling&serving images throgh a REST API.
+* [**Status**](https://hub.docker.com/repository/docker/tunayagci/status-service): This service is responsible for result and status of the screenshots. It serves some REST endpoins documented below.
 
 ### Other external services:
-* **Eureka**: Spring Cloud Eureka is used for service discovery for communication of above services.
-* **Zuul Proxy**: Netflix Zuul is used as an **API Gateway** for these microservices. It is also responsible of handling **server side load balancing**.
+* [**Eureka**](https://hub.docker.com/repository/docker/tunayagci/eureka-server): Spring Cloud Eureka is used for service discovery for communication of above services.
+* [**Zuul Proxy**](https://hub.docker.com/repository/docker/tunayagci/zuul-api-gateway): Netflix Zuul is used as an **API Gateway** for these microservices. It is also responsible of handling **server side load balancing**.
 * **PostgreSQL**: Used by **image-service** and **status-service** for holding data. It is especially used for storing images, inside the **image-service** itself.
 * **Kafka**: Used as an **event bus** to establish a clean **CQRS/ES** pattern.
 * **Chrome**: Google Chrome and chromedriver is loaded as another microservice for handling screenshot capturing.
