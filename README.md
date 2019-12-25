@@ -48,6 +48,20 @@ Images in Docker Hub contains **fat jars**.
 * Each Java container runs with a 1G of `-Xmx1g` enabled.
 * Low memory can create serious problems as timeout issues.
 
+## Local development
+
+(If you want to run the services locally in your IDEA)
+
+1. You still need Docker to run Kafka and Chrome services.
+1. `cd /dev`
+1. `docker-compose up -d`
+1. `cd /deployment`
+1. `sh build-all.sh`
+1. Run every service (except for `event-registry`) as:   
+```java
+java -jar -Dspring.profiles.active=dev /dist/app.jar
+```
+
 ## Architecture
 
 Here is a brief overview of what's going on, which service talks with each other, etc:
