@@ -97,6 +97,7 @@ public class StatusServiceImpl implements StatusService {
         final ScanResult scanResult = scanResultDao.findFirstByScanAndUrlIs(scan, scanEvent.getUrl())
                 .orElseThrow(scanNotFoundException);
         scanResult.setScanStatus(ScanStatus.FAILED);
+        scanResult.setMessage(scanEvent.getErrorMessage());
         scanResultDao.save(scanResult);
         scan = scanDao.findFirstByScanRegisterId(scanEvent.getScanId())
                 .orElseThrow(scanNotFoundException);
@@ -113,7 +114,11 @@ public class StatusServiceImpl implements StatusService {
 
 
     private void checkIfScanIsFinished(Scan scan) {
-        if (scan.getScanResults().size() == scan.getRequestUrls().size()) {
+        final long unFinishedScans = scan.getScanResults()
+                .stream()
+                .filter(f -> f.getScanStatus() == ScanStatus.COMPLETED || f.getScanStatus() == ScanStatus.FAILED)
+                .count();
+        if (unFinishedScans == scan.getRequestUrls().size()) {
             scan.setScanStatus(ScanStatus.COMPLETED);
             scanDao.save(scan);
         } else {

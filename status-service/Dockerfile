@@ -3,4 +3,4 @@ COPY dist/app.jar .
 COPY wait-for-it.sh .
 RUN chmod +x /wait-for-it.sh
 RUN apk add bash
-ENTRYPOINT ["./wait-for-it.sh", "-t", "60", "zuul-proxy:8765", "--", "java","-Djava.security.egd=file:/dev/./urandom", "-Dspring.profiles.active=production", "-jar","/app.jar"]
+CMD ./wait-for-it.sh -t 60 zuul-proxy:8765 -- java $JAVA_OPTS -Dspring.profiles.active=production -Djava.security.egd=file:/dev/./urandom -jar app.jar
