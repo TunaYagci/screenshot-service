@@ -42,7 +42,7 @@ Images in Docker Hub contains **fat jars**.
 1. ```docker-compose up -d ```
 
 ## Architecture
-TODO.
+![arch](/arch-screenshot.png)
 
 ## Usage 
 Usage with python client. TODO.
