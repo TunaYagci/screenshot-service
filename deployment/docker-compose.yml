@@ -49,7 +49,7 @@ services:
 
   eureka:
     container_name: eureka
-    build: ../eureka-server/
+    image: tunayagci/eureka-server:0.0.1
     ports:
       - "8761:8761"
     environment:
@@ -62,7 +62,7 @@ services:
 
   zuul-proxy:
     container_name: zuul
-    build: ../zuul-server/
+    image: tunayagci/zuul-api-gateway:0.0.1
     ports:
       - "8765:8765"
     environment:
@@ -84,7 +84,7 @@ services:
 
   status-service:
     container_name: status-service
-    build: ../status-service/
+    image: tunayagci/status-service:0.0.1
     ports:
       - "8081:8080"
     environment:
@@ -99,7 +99,7 @@ services:
 
   scan-service:
     container_name: scan-service
-    build: ../scan-service/
+    image: tunayagci/scan-service:0.0.1
     ports:
       - "8085:8080"
     environment:
@@ -112,7 +112,7 @@ services:
 
   screenshot-consumer:
     container_name: screenshot-consumer
-    build: ../screenshot-consumer/
+    image: tunayagci/screenshot-consumers:0.0.1
     ports:
       - "8083:8080"
     environment:
@@ -127,7 +127,7 @@ services:
 
   image-service:
     container_name: image-service
-    build: ../image-service/
+    image: tunayagci/image-service:0.0.1
     ports:
       - "8084:8080"
     environment:

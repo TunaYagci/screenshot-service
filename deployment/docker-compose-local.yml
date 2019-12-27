@@ -1,4 +1,4 @@
-version: '2.4'
+version: '3.2'
 
 services:
   zookeeper:
@@ -52,6 +52,10 @@ services:
     build: ../eureka-server/
     ports:
       - "8761:8761"
+    environment:
+      JAVA_OPTS: '-Xmx1g -Xms1g'
+    depends_on:
+      - kafka
     networks:
       - eureka
       - kafka
@@ -61,6 +65,8 @@ services:
     build: ../zuul-server/
     ports:
       - "8765:8765"
+    environment:
+      JAVA_OPTS: '-Xmx1g -Xms1g'
     depends_on:
       - eureka
     networks:
@@ -81,19 +87,23 @@ services:
     build: ../status-service/
     ports:
       - "8081:8080"
+    environment:
+      JAVA_OPTS: '-Xmx1g -Xms1g'
     depends_on:
       - psql-status-service
       - zuul-proxy
     networks:
-      - status
       - kafka
       - eureka
+      - status
 
   scan-service:
     container_name: scan-service
     build: ../scan-service/
     ports:
       - "8085:8080"
+    environment:
+      JAVA_OPTS: '-Xmx1g -Xms1g'
     depends_on:
       - zuul-proxy
     networks:
@@ -105,6 +115,8 @@ services:
     build: ../screenshot-consumer/
     ports:
       - "8083:8080"
+    environment:
+      JAVA_OPTS: '-Xmx1g -Xms1g'
     depends_on:
       - kafka
       - zuul-proxy
@@ -118,6 +130,8 @@ services:
     build: ../image-service/
     ports:
       - "8084:8080"
+    environment:
+      JAVA_OPTS: '-Xmx1g -Xms1g'
     depends_on:
       - kafka
       - zuul-proxy
