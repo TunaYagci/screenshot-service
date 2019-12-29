@@ -70,9 +70,16 @@ Here is a brief overview of what's going on, which service talks with each other
 * Databases aren't drawn here but there are 2 separate PostgreSQL database for **image-service** and **status-service**.
 * Each REST call has to go through **zuul-proxy**.
 
+## Architecture (in detail)
+
+Please see the [docs](docs)
+
 ### Scaling
 
-* Any service except for the **eureka**, **zuul** and **image-service** can be scaled as a cluster and already configured to do so.
+* Any service except for the **eureka**, **zuul** and **psql** services can be scaled as a cluster and already configured to do so.
+* PostgreSQL services can be installed as a cluster, via partitioning. See [PARTITIONING](https://www.postgresql.org/docs/10/ddl-partitioning.html)
+
+TODO: Kubernetes installation
 
 ## Usage 
 
