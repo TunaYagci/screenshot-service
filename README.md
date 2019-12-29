@@ -72,7 +72,7 @@ Here is a brief overview of what's going on, which service talks with each other
 
 ## Architecture (in detail)
 
-Please see the [docs](docs)
+Please see the [docs](https://github.com/TunaYagci/screenshot-service/wiki/Architecture-in-detail)
 
 ### Scaling
 
